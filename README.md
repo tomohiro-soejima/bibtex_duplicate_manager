@@ -5,6 +5,8 @@ Useful when combining multiple `.bib` files and `.tex` files into a larger docum
 
 # Usage
 
+Install `bibtexparser` using `pip install` or your favorite package manager beforehand.
+
 ```bash
 > python bibtex_duplicate_manager.py
 > Welcome to the BibTeX duplicate cleaner!
@@ -19,13 +21,16 @@ Potential duplicates for '{Strongly Correlated Chern Insulators in Magic-Angle T
 4: Chern Insulators, van {{Hove}} Singularities and Topological Flat Bands in Magic-Angle Twisted Bilayer Graphene (key: wu2021Chern) (occur: 2)
 Treat these as duplicates? (yes/no) no # answer if the listed entries correspond to the same file
 
+# if you answer no, uses more stringent comparison criterion to narrow down possible duplicate entries.
 Potential duplicates for '{Strongly Correlated Chern Insulators in Magic-Angle Twisted Bilayer Graphene}':
 # title, citekey, and the number of times the citekey occurs accross `.tex` files.
 1: {Strongly Correlated Chern Insulators in Magic-Angle Twisted Bilayer Graphene} (key: YazdaniChern) (occur: 1)
 2: {Strongly Correlated Chern Insulators in Magic-Angle Twisted Bilayer Graphene} (key: Yazdani2022) (occur: 1)
 Treat these as duplicates? (yes/no) yes
+# enter which citekey you want to use in `.tex` files.
 Enter the number of the key to keep: 2
 
+# updates `.tex` files.
 All occurrences of 'YazdaniChern' in chap2/chap2.tex have been replaced with 'Yazdani2022'.
 
 ...
