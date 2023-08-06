@@ -95,6 +95,8 @@ def check_citekeys_occurence(file_list, citekeys):
     return np.sum(found_list) > 1
 
 def find_citekey_in_files(file_list, citekey, verbose=False):
+    # checks how many times `citekey` shows up in `file_list`.
+
     # Regular expression to match \cite{citekey1, citekey2, ...}
     pattern_str = r'\\cite\{[^}]*\b' + re.escape(citekey) + r'\b[^}]*\}'
     pattern = re.compile(pattern_str)
@@ -134,11 +136,6 @@ if __name__ == "__main__":
     tex_files = input("Enter the paths to the .tex files, separated by commas: ").split(',')
 
     entries = load_bibtex_files(bib_files)
-    # confirm = input("Print arXiv entries? (yes/no) ")
-    # if confirm:
-    #     entries_new = check_arXiv(entries, tex_files)
-    #     for entry in entries_new:
-    #         print(entry["ID"])
     nonzero_entries = [entry for entry in entries if find_citekey_in_files(tex_files, entry["ID"])[0]]
     duplicates = find_potential_duplicates(nonzero_entries, 5)
     duplicates_filtered = filter_duplicates(duplicates, tex_files)
@@ -167,8 +164,6 @@ if __name__ == "__main__":
                     num_tol += 1
                     duplicates2 = find_potential_duplicates(duplicate_entries2, num_tol=num_tol)
                     duplicates_filtered2 = filter_duplicates(duplicates2, tex_files)
-                    print([(item[0], len(item[1])) for item in duplicates2.items()])
-                    print([(item[0], len(item[1])) for item in duplicates_filtered2.items()])
                     # prepend the newly found entries to duplicates
                     if len(duplicates_filtered2) == 0 or current_length > len(next(iter(duplicates_filtered2.values()))):
                         break
