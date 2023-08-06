@@ -1,0 +1,1 @@
+# bibtex_duplicate_manager
