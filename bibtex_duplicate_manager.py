@@ -117,13 +117,28 @@ def find_citekey_in_files(file_list, citekey, verbose=False):
 
     return found, num_occured
 
+def check_arXiv(entries, filelist):
+    entries_new = []
+    for entry in entries:
+        if find_citekey_in_files(filelist, entry["ID"])[0]:
+            if "arxiv" in entry.get("journal", "").lower():
+                entries_new.append(entry)
+
+    return entries_new
+
 if __name__ == "__main__":
     # Let's make it interactive!
     print("Welcome to the BibTeX duplicate cleaner!")
+        
     bib_files = input("Enter the paths to the .bib files, separated by commas: ").split(',')
     tex_files = input("Enter the paths to the .tex files, separated by commas: ").split(',')
 
     entries = load_bibtex_files(bib_files)
+    # confirm = input("Print arXiv entries? (yes/no) ")
+    # if confirm:
+    #     entries_new = check_arXiv(entries, tex_files)
+    #     for entry in entries_new:
+    #         print(entry["ID"])
     nonzero_entries = [entry for entry in entries if find_citekey_in_files(tex_files, entry["ID"])[0]]
     duplicates = find_potential_duplicates(nonzero_entries, 5)
     duplicates_filtered = filter_duplicates(duplicates, tex_files)
